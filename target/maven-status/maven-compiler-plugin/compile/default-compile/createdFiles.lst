@@ -1,0 +1,13 @@
+campus_lost_found\model\Item.class
+campus_lost_found\ClaimMatchingService$MatchResult.class
+campus_lost_found\ClaimMatchingService.class
+campus_lost_found\model\Admin.class
+campus_lost_found\repository\ItemRepository.class
+campus_lost_found\ClaimMatchingService$DescriptionMatch.class
+campus_lost_found\model\ClaimRequest.class
+campus_lost_found\model\Claim.class
+campus_lost_found\repository\AdminRepository.class
+campus_lost_found\AdminController.class
+campus_lost_found\HomeController.class
+campus_lost_found\CampusLostFoundApplication.class
+campus_lost_found\repository\ClaimRepository.class

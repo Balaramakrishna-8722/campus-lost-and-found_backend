@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lost & Found Reports</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background-color: #1f4e79;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        /* Navigation added */
+        nav {
+            margin-top: 18px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .search-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .search-box h2 {
+            color: #1f4e79;
+            margin-top: 0;
+        }
+
+        .search-input {
+            width: 55%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .search-button {
+            padding: 12px 25px;
+            background-color: #1f4e79;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #163a5c;
+        }
+
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 5px;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .all-button {
+            background-color: #1f4e79;
+        }
+
+        .lost-button {
+            background-color: #e74c3c;
+        }
+
+        .found-button {
+            background-color: #27ae60;
+        }
+
+        .filter-button:hover {
+            opacity: 0.85;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background-color: #1f4e79;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .lost {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .found {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .claim-button {
+            display: inline-block;
+            padding: 8px 14px;
+            background-color: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .claim-button:hover {
+            background-color: #219150;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            background-color: white;
+        }
+
+        .privacy-message {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff8e1;
+            border-left: 5px solid #f0ad4e;
+            border-radius: 6px;
+            color: #555;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background-color: #555;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .back-button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>Lost & Found Reports</h1>
+
+    <!-- Navigation added -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="/lost">Report Lost</a>
+        <a href="/found">Report Found</a>
+        <a href="/reports">View Reports</a>
+        <a href="/admin/login">Admin Login</a>
+    </nav>
+
+</header>
+
+<div class="container">
+
+    <!-- Search -->
+    <div class="search-box">
+
+        <h2>Search Reports</h2>
+
+        <form action="/reports" method="get">
+
+            <input
+                type="text"
+                name="search"
+                class="search-input"
+                placeholder="Search by item name or location"
+                th:value="${search}">
+
+            <button type="submit" class="search-button">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+
+        <a href="/reports" class="filter-button all-button">
+            📋 All Items
+        </a>
+
+        <a href="/reports?type=LOST" class="filter-button lost-button">
+            🔴 Lost Items
+        </a>
+
+        <a href="/reports?type=FOUND" class="filter-button found-button">
+            🟢 Found Items
+        </a>
+
+    </div>
+
+
+    <!-- Reports Table -->
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Type</th>
+
+                <th>Item Name</th>
+
+                <th>Location</th>
+
+                <th>Description</th>
+
+                <th>Action</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="item : ${items}">
+
+                <!-- Type -->
+                <td>
+
+                    <span
+                        th:class="${item.itemType == 'LOST' ? 'lost' : 'found'}"
+                        th:text="${item.itemType}">
+                    </span>
+
+                </td>
+
+
+                <!-- Item Name -->
+                <td th:text="${item.itemName}">
+                </td>
+
+
+                <!-- Location -->
+                <td th:text="${item.location}">
+                </td>
+
+
+                <!-- Description -->
+                <td th:text="${item.description}">
+                </td>
+
+
+                <!-- Action -->
+                <td>
+
+                    <!-- Item is still available -->
+                    <a
+                        th:if="${item.itemType == 'FOUND' && item.itemStatus == 'AVAILABLE'}"
+                        th:href="@{/claim/{id}(id=${item.id})}"
+                        class="claim-button">
+
+                        Claim This Item
+
+                    </a>
+
+                    <!-- Item has already been handed over -->
+                    <span
+                        th:if="${item.itemType == 'FOUND' && item.itemStatus == 'CLAIMED'}">
+
+                        Claimed by Owner
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+
+            <!-- No Results -->
+            <tr th:if="${#lists.isEmpty(items)}">
+
+                <td colspan="5" class="no-results">
+
+                    No reports found.
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- Privacy Information -->
+    <div class="privacy-message">
+
+        🔒 <strong>Privacy Notice:</strong>
+        Contact information is kept private.
+        It will only be shared with authorized users after the claim verification process.
+
+    </div>
+
+
+    <!-- Back Button -->
+    <a href="/" class="back-button">
+
+        Back to Home
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

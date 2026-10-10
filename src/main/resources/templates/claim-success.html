@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Claim Submitted</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 70px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 55px;
+        }
+
+        h1 {
+            color: #27ae60;
+        }
+
+        .message {
+            color: #555;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .details {
+            margin-top: 30px;
+            background-color: #f4f7fb;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .details p {
+            margin: 10px 0;
+        }
+
+        .status-message {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #fff3cd;
+            color: #856404;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background-color: #1f4e79;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #163a5c;
+        }
+
+        .home-button {
+            background-color: #555;
+            margin-left: 10px;
+        }
+
+        .home-button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="success-icon">
+        ✅
+    </div>
+
+    <h1>Claim Submitted Successfully</h1>
+
+    <p class="message">
+        Your claim has been submitted successfully.
+        The claim can now be reviewed before the item is returned.
+    </p>
+
+
+    <div class="details">
+
+        <p>
+            <strong>Item:</strong>
+            <span th:text="${item.itemName}"></span>
+        </p>
+
+        <p>
+            <strong>Your Name:</strong>
+            <span th:text="${claimantName}"></span>
+        </p>
+
+        <p>
+            <strong>Contact:</strong>
+            <span th:text="${claimantContact}"></span>
+        </p>
+
+        <p>
+            <strong>Where You Lost It:</strong>
+            <span th:text="${lostLocation}"></span>
+        </p>
+
+        <p>
+            <strong>Approximate Time:</strong>
+            <span th:text="${lostTime}"></span>
+        </p>
+
+    </div>
+
+
+    <div class="status-message">
+
+        Your claim is currently waiting for admin verification.
+
+    </div>
+
+
+    <a href="/reports" class="button">
+
+        Back to Reports
+
+    </a>
+
+
+    <a href="/" class="button home-button">
+
+        Home
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - Campus Lost & Found</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background-color: #1f4e79;
+            color: white;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .header-content {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout {
+            background-color: white;
+            color: #1f4e79;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #1f4e79;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #1f4e79;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #e67e22;
+        }
+
+        .approved {
+            color: #188038;
+        }
+
+        .rejected {
+            color: #c62828;
+        }
+
+        .approve {
+            background-color: #188038;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        .reject {
+            background-color: #c62828;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .analysis {
+            background-color: #f4f7fb;
+            padding: 10px;
+            border-radius: 6px;
+            min-width: 220px;
+        }
+
+        .score {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1f4e79;
+        }
+
+        .recommend-approve {
+            color: #188038;
+            font-weight: bold;
+        }
+
+        .recommend-review {
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        .recommend-reject {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .reason {
+            margin-top: 8px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .empty {
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-content">
+
+        <div>
+            <h1>Campus Lost & Found</h1>
+            <p>Admin Dashboard</p>
+        </div>
+
+        <a href="/admin/logout" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Claims</h2>
+
+        <div th:if="${#lists.isEmpty(claims)}">
+            <p class="empty">No claims submitted yet.</p>
+        </div>
+
+        <table th:unless="${#lists.isEmpty(claims)}">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Item ID</th>
+                <th>Claimant Name</th>
+                <th>Claimant Contact</th>
+                <th>Lost Location</th>
+                <th>Lost Time</th>
+                <th>Identifying Details</th>
+                <th>Automatic Analysis</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="claim : ${claims}">
+
+                <td th:text="${claim.id}"></td>
+
+                <td th:text="${claim.itemId}"></td>
+
+                <td th:text="${claim.claimantName}"></td>
+
+                <td th:text="${claim.claimantContact}"></td>
+
+                <td th:text="${claim.lostLocation}"></td>
+
+                <td th:text="${claim.lostTime}"></td>
+
+                <td th:text="${claim.identifyingDetails}"></td>
+
+                <!-- Automatic Analysis -->
+                <td>
+
+                    <div class="analysis">
+
+                        <div class="score">
+                            Match Score:
+                            <span th:text="${claim.matchScore}"></span>%
+                        </div>
+
+                        <div
+                            th:classappend="${claim.matchRecommendation == 'APPROVE'}
+                                ? ' recommend-approve'
+                                : (${claim.matchRecommendation == 'REVIEW'}
+                                    ? ' recommend-review'
+                                    : ' recommend-reject')">
+
+                            Recommendation:
+                            <span th:text="${claim.matchRecommendation}">
+                            </span>
+
+                        </div>
+
+                        <div class="reason">
+                            <strong>Reason:</strong>
+                            <span th:text="${claim.matchReason}">
+                            </span>
+                        </div>
+
+                    </div>
+
+                </td>
+
+                <!-- Current Status -->
+                <td>
+
+                    <span class="status pending"
+                          th:if="${claim.status == 'PENDING'}">
+                        PENDING
+                    </span>
+
+                    <span class="status approved"
+                          th:if="${claim.status == 'APPROVED'}">
+                        APPROVED
+                    </span>
+
+                    <span class="status rejected"
+                          th:if="${claim.status == 'REJECTED'}">
+                        REJECTED
+                    </span>
+
+                    <span class="status approved"
+                          th:if="${claim.status == 'COMPLETED'}">
+                        COMPLETED
+                    </span>
+
+                </td>
+
+                <!-- Admin Final Decision / Handover -->
+                <td>
+
+                    <!-- Pending claim -->
+                    <span th:if="${claim.status == 'PENDING'}">
+
+                        <a class="approve"
+                           th:href="@{/admin/claims/approve/{id}(id=${claim.id})}">
+                            Approve
+                        </a>
+
+                        <a class="reject"
+                           th:href="@{/admin/claims/reject/{id}(id=${claim.id})}">
+                            Reject
+                        </a>
+
+                    </span>
+
+                    <!-- Approved claim -->
+                    <span th:if="${claim.status == 'APPROVED'}">
+
+                        <a class="approve"
+                           th:href="@{/admin/claims/complete/{id}(id=${claim.id})}">
+                            Mark as Claimed
+                        </a>
+
+                    </span>
+
+                    <!-- Completed claim -->
+                    <span th:if="${claim.status == 'COMPLETED'}">
+                        Completed
+                    </span>
+
+                    <!-- Rejected claim -->
+                    <span th:if="${claim.status == 'REJECTED'}">
+                        Rejected
+                    </span>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report Found Item - Campus Lost & Found</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #1e3a8a;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #1e3a8a;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1e3a8a;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        button {
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 13px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #172f70;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Campus Lost & Found</div>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/lost">Report Lost</a>
+            <a href="/found">Report Found</a>
+            <a href="/reports">View Reports</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>Report Found Item</h1>
+
+            <p class="subtitle">
+                Help return a lost item to its owner.
+            </p>
+
+            <form action="/found" method="post">
+
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+
+                    <input
+                        type="text"
+                        id="itemName"
+                        name="itemName"
+                        placeholder="Example: Yellow Bottle"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Found Location</label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        placeholder="Example: Library"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Describe the item and any identifying details"
+                        required></textarea>
+                </div>
+
+                <!-- NEW: Finder Name -->
+                <div class="form-group">
+                    <label for="finderName">Your Name</label>
+
+                    <input
+                        type="text"
+                        id="finderName"
+                        name="finderName"
+                        placeholder="Enter your name"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">Your Contact</label>
+
+                    <input
+                        type="text"
+                        id="contact"
+                        name="contact"
+                        placeholder="Phone number or email"
+                        required>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit">
+                        Report Found Item
+                    </button>
+                </div>
+
+            </form>
+
+            <a href="/" class="back-link">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Claim Status - Campus Lost & Found</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background-color: #1f4e79;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .status-box {
+            background-color: white;
+            padding: 35px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .status-box h2 {
+            color: #1f4e79;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            margin-top: 25px;
+            background-color: #f4f7fb;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .details p {
+            margin: 10px 0;
+        }
+
+        .status {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .contact-box {
+            margin-top: 25px;
+            background-color: #eef5fb;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .contact-box h3 {
+            color: #1f4e79;
+            margin-top: 0;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background-color: #1f4e79;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #163a5c;
+        }
+
+        .home-button {
+            background-color: #555;
+            margin-left: 10px;
+        }
+
+        .home-button:hover {
+            background-color: #333;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>Campus Lost & Found</h1>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/lost">Report Lost</a>
+        <a href="/found">Report Found</a>
+        <a href="/reports">View Reports</a>
+        <a href="/admin/login">Admin Login</a>
+    </nav>
+
+</header>
+
+<div class="container">
+
+    <div class="status-box">
+
+        <h2>Claim Status</h2>
+
+        <div class="details">
+
+            <p>
+                <strong>Item:</strong>
+                <span th:text="${item.itemName}"></span>
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                <span th:text="${item.location}"></span>
+            </p>
+
+            <p>
+                <strong>Claimant Name:</strong>
+                <span th:text="${claim.claimantName}"></span>
+            </p>
+
+        </div>
+
+        <div
+            th:if="${claim.status == 'PENDING'}"
+            class="status pending">
+
+            Your claim is currently waiting for admin verification.
+
+        </div>
+
+        <div
+            th:if="${claim.status == 'APPROVED'}"
+            class="status approved">
+
+            Your claim has been approved by the administrator.
+
+        </div>
+
+        <div
+            th:if="${claim.status == 'COMPLETED'}"
+            class="status approved">
+
+            Your claim has been completed and the item has been handed over to you.
+
+        </div>
+
+        <div
+            th:if="${claim.status == 'REJECTED'}"
+            class="status rejected">
+
+            Your claim has been rejected by the administrator.
+
+        </div>
+
+        <div
+            th:if="${claim.status == 'APPROVED' || claim.status == 'COMPLETED'}"
+            class="contact-box">
+
+            <h3>Finder Contact Information</h3>
+
+            <p th:if="${claim.status == 'APPROVED'}">
+                Your claim has been approved. You can now contact
+                the person who reported this item as found and
+                arrange the handover.
+            </p>
+
+            <p th:if="${claim.status == 'COMPLETED'}">
+                The claim has been completed. The contact information
+                used for the handover is shown below.
+            </p>
+
+            <p>
+                <strong>Contact:</strong>
+                <span th:text="${finderContact}"></span>
+            </p>
+
+        </div>
+
+        <a href="/reports" class="button">
+            Back to Reports
+        </a>
+
+        <a href="/" class="button home-button">
+            Home
+        </a>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <p>
+        Campus Lost & Found System
+    </p>
+
+</footer>
+
+</body>
+
+</html>
