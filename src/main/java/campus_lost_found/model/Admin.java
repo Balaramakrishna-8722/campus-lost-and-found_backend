@@ -1,3 +1,4 @@
+ 
 package campus_lost_found.model;
 
 import jakarta.persistence.Entity;
